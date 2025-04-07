@@ -88,7 +88,7 @@ namespace CloudConvert.API
       return request;
     }
 
-    private HttpRequestMessage GetMultipartFormDataRequest(string endpoint, HttpMethod method, HttpContent fileContent, string fileName, Dictionary<string, string> parameters = null)
+    private static HttpRequestMessage GetMultipartFormDataRequest(string endpoint, HttpMethod method, HttpContent fileContent, string fileName, Dictionary<string, string> parameters = null)
     {
       var content = new MultipartFormDataContent();
       var request = new HttpRequestMessage { RequestUri = new Uri(endpoint), Method = method, };
@@ -271,12 +271,12 @@ namespace CloudConvert.API
       return hashHMAC == signature;
     }
 
-    private string HashHMAC(string key, string message)
+    private static string HashHMAC(string key, string message)
     {
       byte[] hash = new HMACSHA256(Encoding.UTF8.GetBytes(key)).ComputeHash(new UTF8Encoding().GetBytes(message));
       return BitConverter.ToString(hash).Replace("-", "").ToLower();
     }
-    private Dictionary<string, string> GetParameters(object parameters)
+    private static Dictionary<string, string> GetParameters(object parameters)
     {
       var dictionaryParameters = new Dictionary<string, string>();
 
